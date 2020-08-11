@@ -20,11 +20,11 @@ cursor: pointer;
 }`;
 
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     console.log('[App.js] constructor')
-  }  
-  
+  }
+
   state = {
     persons: [
       { id: "1", name: 'Gui', age: 28 },
@@ -35,13 +35,22 @@ class App extends Component {
     showPersons: false
   }
 
-  static getDeviredStateFromProps(props,state){
+  static getDeviredStateFromProps(props, state) {
     console.log('[App.js] getDeviredStateFromProps')
     return state;
   }
 
-  componentDidMount(){
+  componentDidMount() {
     console.log('[App.js] componentDidMount');
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponentUpdate')
+    return true;
+  }
+
+  componentDidUpdate() {
+    console.log('[App.js] componentDidUpdate');
   }
 
   nameChangedHandler = (event, id) => {
@@ -93,20 +102,20 @@ class App extends Component {
 
     if (this.state.showPersons) {
       persons = (
-      
-          <Persons persons={this.state.persons} 
-              clicked={this.deletePersonHandler} 
-              changed={this.nameChangedHandler}/>
-          // { {this.state.persons.map((person, index) => {
-          //   return <ErrorBoundary key={person.id}><Person
-          //     key={person.id}
-          //     name={person.name}
-          //     age={person.age}
-          //     click={() => this.deletePersonHandler(index)}
-          //     changed={(event) => this.nameChangedHandler(event, person.id)} />
-          //   </ErrorBoundary>
-          // })} }
-        
+
+        <Persons persons={this.state.persons}
+          clicked={this.deletePersonHandler}
+          changed={this.nameChangedHandler} />
+        // { {this.state.persons.map((person, index) => {
+        //   return <ErrorBoundary key={person.id}><Person
+        //     key={person.id}
+        //     name={person.name}
+        //     age={person.age}
+        //     click={() => this.deletePersonHandler(index)}
+        //     changed={(event) => this.nameChangedHandler(event, person.id)} />
+        //   </ErrorBoundary>
+        // })} }
+
       )
       // style.backgroundColor = 'red'
       // style[':hover'] = {
@@ -127,7 +136,7 @@ class App extends Component {
         <Cockpit title={this.props.appTitle}
           showPersons={this.state.showPersons}
           persons={this.state.persons}
-          clicked={this.togglePersonsHandler}/>
+          clicked={this.togglePersonsHandler} />
         {persons}
       </div>
     );
