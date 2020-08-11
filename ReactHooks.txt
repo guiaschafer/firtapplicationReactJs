@@ -1,0 +1,48 @@
+import React, { useState } from 'react';
+import Person from './Person/Person'
+import './App.css';
+
+const App = props => {
+  // state = {
+  //   persons: [
+  //     { name: 'Gui', age: 28 },
+  //     { name: 'Pati', age: 32 },
+  //     { name: 'Jose', age: 50 }
+  //   ]
+  // }
+  const [personsState, setPersonsState] = useState({
+    persons: [
+      { name: 'Gui', age: 28 },
+      { name: 'Pati', age: 32 },
+      { name: 'Jose', age: 50 }
+    ],
+    otherState: "teste"
+  });
+
+  const switchNameHandler = () => {
+    //DON'T TO THIS:personsState.persons[0].name = "Guilherme";
+
+    setPersonsState({
+      persons: [
+        { name: 'Guilherme', age: 28 },
+        { name: 'Patricia', age: 32 },
+        { name: 'Jose', age: 55 }
+      ],
+      otherState: personsState.otherState
+    })
+  }
+  // render() {
+  return (
+    <div className="App">
+      <h1>Hi, I'm a React App</h1>
+      <Person name={personsState.persons[0].name} age={personsState.persons[0].age} />
+      <Person name={personsState.persons[1].name} age={personsState.persons[1].age} />
+      <Person name={personsState.persons[2].name} age={personsState.persons[2].age}>My hobbies: Racing</Person>
+      <button onClick={switchNameHandler}>Switch Name</button>
+    </div>
+  );
+  // return React.createElement('div', { className: 'App' },
+  //    React.createElement('h1', null, 'Hi, Im a ReactApp!!'))
+  // }
+}
+export default App;
