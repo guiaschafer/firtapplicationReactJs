@@ -32,7 +32,8 @@ class App extends Component {
       { id: "3", name: 'Jose', age: 50 }
 
     ],
-    showPersons: false
+    showPersons: false,
+    showCockpit: true
   }
 
   static getDeviredStateFromProps(props, state) {
@@ -128,15 +129,18 @@ class App extends Component {
 
     return (
       <div className="App">
+        <button onClick={() => { this.setState({ showCockpit: false }) }}> Remove Cockpit </button>
         {/* <h1>Hi, I'm a React App</h1>
         <p className={classes.join(' ')}>This is really working!</p>
         <button className={classesCss.Button}
           onClick={this.togglePersonsHandler}>Switch Name</button> */}
         {/* <StyledButton alt={this.state.showPersons} onClick={this.togglePersonsHandler}>Toogle Persons</StyledButton> */}
-        <Cockpit title={this.props.appTitle}
-          showPersons={this.state.showPersons}
-          persons={this.state.persons}
-          clicked={this.togglePersonsHandler} />
+        {this.state.showCockpit ?
+          <Cockpit title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            persons={this.state.persons}
+            clicked={this.togglePersonsHandler} /> : null
+        }
         {persons}
       </div>
     );
