@@ -130,7 +130,7 @@ class App extends Component {
 
 
     return (
-      <Aux>
+      <div className="App">
         <button onClick={() => { this.setState({ showCockpit: false }) }}> Remove Cockpit </button>
         {/* <h1>Hi, I'm a React App</h1>
         <p className={classes.join(' ')}>This is really working!</p>
@@ -144,7 +144,7 @@ class App extends Component {
             clicked={this.togglePersonsHandler} /> : null
         }
         {persons}
-      </Aux>
+      </div>
     );
 
     // return React.createElement('div', { className: 'App' },
@@ -153,4 +153,4 @@ class App extends Component {
   }
 }
 
-export default withClass(App, classesCss.App);
+export default App; 
