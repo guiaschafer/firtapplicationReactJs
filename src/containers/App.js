@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 import Persons from '../components/Persons/Persons'
 import Cockpit from '../components/Cockpit/Cockpit'
+import withClass from '../hoc/withClass'
+import Aux from '../hoc/Auxiliary'
 
 const StyledButton = styled.button`  
 background-color: ${props => props.alt ? 'red' : 'green'};
@@ -128,7 +130,7 @@ class App extends Component {
 
 
     return (
-      <div className="App">
+      <Aux>
         <button onClick={() => { this.setState({ showCockpit: false }) }}> Remove Cockpit </button>
         {/* <h1>Hi, I'm a React App</h1>
         <p className={classes.join(' ')}>This is really working!</p>
@@ -138,11 +140,11 @@ class App extends Component {
         {this.state.showCockpit ?
           <Cockpit title={this.props.appTitle}
             showPersons={this.state.showPersons}
-            persons={this.state.persons}
+            personsLength={this.state.persons.length}
             clicked={this.togglePersonsHandler} /> : null
         }
         {persons}
-      </div>
+      </Aux>
     );
 
     // return React.createElement('div', { className: 'App' },
@@ -150,4 +152,5 @@ class App extends Component {
 
   }
 }
-export default App;
+
+export default withClass(App, classesCss.App);
