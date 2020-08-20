@@ -35,7 +35,8 @@ class App extends Component {
 
     ],
     showPersons: false,
-    showCockpit: true
+    showCockpit: true,
+    changeCounter: 0
   }
 
   static getDeviredStateFromProps(props, state) {
@@ -68,8 +69,11 @@ class App extends Component {
     persons[personIndex] = person;
 
 
-    this.setState({
-      persons: persons
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1
+      }
     })
   }
 
