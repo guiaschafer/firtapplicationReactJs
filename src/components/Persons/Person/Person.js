@@ -1,4 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import styled from 'styled-components'
 import Aux from '../../../hoc/Auxiliary'
 import withClass from '../../../hoc/withClass'
@@ -25,12 +27,23 @@ class Person extends Component {
         console.log('[Person.js] rendering...');
         return (
             <Aux>
-                <p onClick={this.props.click} > I'm a {this.props.name} and I'm a {this.props.age} years!</p >
+                <p onClick={this.props.click} >
+                    I'm a {this.props.name} and I'm a {this.props.age} years!
+                </p >
                 <p key="i2">{this.props.children}</p>
-                <input key="i3" type="text" onChange={this.props.changed} />
+                <input key="i3"
+                    type="text"
+                    onChange={this.props.changed} />
             </Aux>
         )
     }
 }
+
+Person.propTypes = {
+    click: PropTypes.func,
+    changed: PropTypes.func,
+    name: PropTypes.string,
+    age: PropTypes.number
+};
 
 export default withClass(Person, classes.Person);
