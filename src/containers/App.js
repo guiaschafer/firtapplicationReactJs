@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import Person from '../components/Persons/Person/Person'
 import classesCss from './App.css';
-import styled from 'styled-components'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
-import Persons from '../components/Persons/Persons'
-import Cockpit from '../components/Cockpit/Cockpit'
-import withClass from '../hoc/withClass'
-import Aux from '../hoc/Auxiliary'
+import styled from 'styled-components';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
+import withClass from '../hoc/withClass';
+import Aux from '../hoc/Auxiliary';
+import AuthContext from '../context/auth-context';
 
 const StyledButton = styled.button`  
 background-color: ${props => props.alt ? 'red' : 'green'};
@@ -36,7 +37,8 @@ class App extends Component {
     ],
     showPersons: false,
     showCockpit: true,
-    changeCounter: 0
+    changeCounter: 0,
+    authenticated: false
   }
 
   static getDeviredStateFromProps(props, state) {
@@ -58,30 +60,36 @@ class App extends Component {
   }
 
   nameChangedHandler = (event, id) => {
-    const personIndex = this.state.persons.findIndex(p => {
-      return p.id === id
-    });
-
-    const person = { ...this.state.persons[personIndex] };
-    person.name = event.target.value
-
-    const persons = [...this.state.persons];
-    persons[personIndex] = person;
-
-
-    this.setState((prevState, props) => {
-      return {
-        persons: persons,
-        changeCounter: prevState.changeCounter + 1
-      }
-    })
+    const stateCopy = { ...this.state };
+    stateCopy.name = event.target.value
+    this.setState({ stateCopy });
   }
+
+  princeChangedHandler = (event, id) => {
+    const stateCopy = { ...this.state };
+    stateCopy.price = event.target.value
+    this.setState({ stateCopy });
+  }
+
+
+  quantityChangedHandler = (event, id) => {
+    const stateCopy = { ...this.state };
+    stateCopy.quantityChangedHandler = event.target.value
+    this.setState({ stateCopy });
+  }
+
 
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
     this.setState({
       showPersons: !doesShow
     });
+  }
+
+  loginHandler = () => {
+    this.setState({ authenticated: true });
+    const test = this.state.authenticated;
+    console.log('teste');
   }
 
   deletePersonHandler = (pIndex) => {
@@ -112,7 +120,8 @@ class App extends Component {
 
         <Persons persons={this.state.persons}
           clicked={this.deletePersonHandler}
-          changed={this.nameChangedHandler} />
+          changed={this.nameChangedHandler}
+          isAuthenticated={this.state.authenticated} />
         // { {this.state.persons.map((person, index) => {
         //   return <ErrorBoundary key={person.id}><Person
         //     key={person.id}
@@ -141,13 +150,16 @@ class App extends Component {
         <button className={classesCss.Button}
           onClick={this.togglePersonsHandler}>Switch Name</button> */}
         {/* <StyledButton alt={this.state.showPersons} onClick={this.togglePersonsHandler}>Toogle Persons</StyledButton> */}
-        {this.state.showCockpit ?
-          <Cockpit title={this.props.appTitle}
-            showPersons={this.state.showPersons}
-            personsLength={this.state.persons.length}
-            clicked={this.togglePersonsHandler} /> : null
-        }
-        {persons}
+        <AuthContext.Provider value={{ authenticated: this.state.authenticated, login: this.loginHandler }}>
+          {this.state.showCockpit ? (
+            <Cockpit title={this.props.appTitle}
+              showPersons={this.state.showPersons}
+              personsLength={this.state.persons.length}
+              clicked={this.togglePersonsHandler}
+             />) : null
+          }
+          {persons}
+        </AuthContext.Provider>
       </div>
     );
 

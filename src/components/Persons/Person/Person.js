@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import styled from 'styled-components'
-import Aux from '../../../hoc/Auxiliary'
-import withClass from '../../../hoc/withClass'
+import styled from 'styled-components';
+import Aux from '../../../hoc/Auxiliary';
+import withClass from '../../../hoc/withClass';
 import classes from './Person.css';
-
+import AuthContext from '../../../context/auth-context';
 
 // import './Person.css'
 
@@ -28,15 +28,20 @@ class Person extends Component {
         this.inputElementRef = React.createRef();
     }
     
+    static contextType = AuthContext;
+
     componentDidMount(){
         // this.inputElement.focs();
         this.inputElementRef.current.focus();
+        console.log(this.context.authenticated);
     }
 
     render() {
         console.log('[Person.js] rendering...');
         return (
             <Aux>
+                {this.context.authenticated ? <p>Authenticated!</p> : <p>Please log in!</p>}
+                    
                 <p onClick={this.props.click} >
                     I'm a {this.props.name} and I'm a {this.props.age} years!
                 </p >
@@ -58,4 +63,4 @@ Person.propTypes = {
     age: PropTypes.number
 };
 
-export default withClass(Person, classes.Person);
+export default Person;

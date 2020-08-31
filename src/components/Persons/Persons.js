@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Person from './Person/Person'
+import Person from './Person/Person';
 
 class Persons extends Component {
     // static getDeviredStateFromProps(props, state) {
@@ -13,9 +13,9 @@ class Persons extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         console.log('[Persons.js] shouldComponentUpdate');
-        if(nextProps.persons !== this.props.persons ){
+        if (nextProps.persons !== this.props.persons) {
             return true;
-        }else{
+        } else {
             return false;
         }
 
@@ -35,21 +35,27 @@ class Persons extends Component {
         console.log(snapshot);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         console.log('[Persons.js] componentWillUnmount');
     }
 
     render() {
-        console.log('[Persons.js] rendering...');
+        console.log('[Personsre.js] rendering...');
 
-        return this.props.persons.map((person, index) => {
-            return (<Person
-                key={person.id}
-                name={person.name}
-                age={person.age}
-                click={() => this.props.clicked(index)}
-                changed={(event) => this.props.changed(event, person.id)} />);
-        });
+        return (
+            this.props.persons.map((person, index) => {
+                return (<Person
+                    key={person.id}
+                    name={person.name}
+                    age={person.age}
+                    click={() => this.props.clicked(index)}
+                    changed={(event) => this.props.changed(event, person.id)}
+                    // isAuth={this.props.isAuthenticated}
+                />);
+            })
+
+
+        );
     }
 }
 export default Persons;
